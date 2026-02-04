@@ -1,20 +1,31 @@
 import { NextResponse } from 'next/server';
 import { kv } from '@vercel/kv';
 
-// 1. THE LISTENER (Spy.js talks to this)
+// 1. LOCAL MEMORY FALLBACK
+// This is used only when running on your laptop (localhost)
+let localMemory = {
+  status: 'IDLE',
+  lastActive: Date.now()
+};
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    
-    // Logic: If WPM > 0, we are FLOWing.
     const status = body.wpm > 0 ? 'FLOW' : 'IDLE';
-    
-    // Save to Vercel KV (Redis)
-    // We set it to expire in 10 seconds so it auto-resets if you stop sending
-    await kv.set('user_status', { 
-      status: status, 
-      lastActive: Date.now() 
-    }, { ex: 10 }); // ex: 10 means "expire in 10 seconds"
+    const hasKV = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
+
+    if (hasKV) {
+        // --- VERCEL MODE (Cloud Database) ---
+        await kv.set('user_status', { 
+            status: status, 
+            lastActive: Date.now() 
+        }, { ex: 10 });
+    } else {
+        // --- LOCALHOST MODE (Laptop Memory) ---
+        // console.log("💻 Using Local Memory"); // Uncomment to debug
+        localMemory.status = status;
+        localMemory.lastActive = Date.now();
+    }
 
     return NextResponse.json({ success: true, status });
   } catch (error) {
@@ -23,13 +34,23 @@ export async function POST(req: Request) {
   }
 }
 
-// 2. THE REPORTER (Website asks this)
 export async function GET() {
   try {
-    // Read from Vercel KV
-    const data = await kv.get('user_status') as { status: string; lastActive: number } | null;
+    const hasKV = process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN;
+    let data = null;
 
-    // If no data found (expired), assume IDLE
+    if (hasKV) {
+        // --- VERCEL MODE ---
+        data = await kv.get('user_status') as { status: string; lastActive: number } | null;
+    } else {
+        // --- LOCALHOST MODE ---
+        // Reset to IDLE if no signal for 10 seconds
+        if (Date.now() - localMemory.lastActive > 10000) {
+            localMemory.status = 'IDLE';
+        }
+        data = localMemory;
+    }
+
     if (!data) {
         return NextResponse.json({ status: 'IDLE' });
     }
@@ -38,4 +59,4 @@ export async function GET() {
   } catch (error) {
     return NextResponse.json({ status: 'IDLE' });
   }
-}
+}//kdakndalkdsk
