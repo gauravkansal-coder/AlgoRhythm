@@ -19,14 +19,18 @@ export function MediaControls({
     <div className="flex flex-col items-center gap-6">
       {/* Track Info */}
       <div className="text-center">
-        <h2 className="text-lg font-medium text-foreground">Lo-Fi Focus</h2>
-        <p className="text-sm text-muted-foreground font-mono">// System Idle</p>
+        <h2 className="text-lg md:text-xl font-semibold text-white tracking-tight">
+          Lo-Fi Focus
+        </h2>
+        <p className="text-sm text-zinc-500 font-mono">
+          {"// System Idle"}
+        </p>
       </div>
 
-      {/* Controls */}
-      <div className="flex items-center gap-4">
+      {/* Playback Controls */}
+      <div className="flex items-center gap-3">
         <button
-          className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+          className="p-3 text-zinc-500 hover:text-white transition-colors duration-200"
           aria-label="Previous track"
         >
           <SkipBack className="w-5 h-5" />
@@ -34,37 +38,37 @@ export function MediaControls({
 
         <button
           onClick={onPlayPause}
-          className="w-14 h-14 rounded-full bg-primary text-primary-foreground flex items-center justify-center hover:bg-primary/90 transition-all hover:scale-105 active:scale-95"
+          className="w-16 h-16 rounded-full bg-cyan-500 text-zinc-950 flex items-center justify-center hover:bg-cyan-400 transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg shadow-cyan-500/25"
           aria-label={isPlaying ? "Pause" : "Play"}
         >
           {isPlaying ? (
-            <Pause className="w-6 h-6" />
+            <Pause className="w-7 h-7" />
           ) : (
-            <Play className="w-6 h-6 ml-1" />
+            <Play className="w-7 h-7 ml-1" />
           )}
         </button>
 
         <button
-          className="p-2 text-muted-foreground hover:text-foreground transition-colors"
+          className="p-3 text-zinc-500 hover:text-white transition-colors duration-200"
           aria-label="Next track"
         >
           <SkipForward className="w-5 h-5" />
         </button>
       </div>
 
-      {/* Volume */}
-      <div className="flex items-center gap-3 w-48">
-        <Volume2 className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+      {/* Volume Control */}
+      <div className="flex items-center gap-3 w-52">
+        <Volume2 className="w-4 h-4 text-zinc-500 flex-shrink-0" />
         <input
           type="range"
           min="0"
           max="100"
           value={volume}
           onChange={(e) => onVolumeChange(Number(e.target.value))}
-          className="w-full h-1 bg-secondary rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:hover:bg-primary/90 [&::-webkit-slider-thumb]:transition-colors"
+          className="flex-1"
           aria-label="Volume"
         />
-        <span className="text-xs text-muted-foreground font-mono w-8 text-right">
+        <span className="text-xs text-zinc-500 font-mono w-8 text-right tabular-nums">
           {volume}
         </span>
       </div>
