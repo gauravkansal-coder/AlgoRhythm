@@ -45,31 +45,31 @@
   --ring: 165 80% 50%;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  html {
-    color-scheme: dark;
-  }
-  body {
-    @apply bg-background text-foreground;
-    background-color: hsl(240 10% 4%);
-    color: hsl(0 0% 95%);
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-color: hsl(var(--border));
+}
+
+html,
+body {
+  min-height: 100%;
+  background-color: hsl(240, 10%, 4%);
+  color: hsl(0, 0%, 95%);
 }
 
 @keyframes pulse-glow {
   0%, 100% {
-    box-shadow: 0 0 60px 20px hsl(165 80% 50% / 0.3),
-                0 0 100px 40px hsl(165 80% 50% / 0.15),
-                0 0 140px 60px hsl(165 80% 50% / 0.05);
+    box-shadow: 0 0 60px 20px hsla(165, 80%, 50%, 0.3),
+                0 0 100px 40px hsla(165, 80%, 50%, 0.15),
+                0 0 140px 60px hsla(165, 80%, 50%, 0.05);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 80px 30px hsl(165 80% 50% / 0.4),
-                0 0 120px 50px hsl(165 80% 50% / 0.2),
-                0 0 160px 70px hsl(165 80% 50% / 0.1);
+    box-shadow: 0 0 80px 30px hsla(165, 80%, 50%, 0.4),
+                0 0 120px 50px hsla(165, 80%, 50%, 0.2),
+                0 0 160px 70px hsla(165, 80%, 50%, 0.1);
     transform: scale(1.02);
   }
 }

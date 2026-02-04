@@ -10,19 +10,19 @@ export default function AlgoRhythmDashboard() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [volume, setVolume] = useState(75)
 
+  console.log("[v0] AlgoRhythmDashboard rendering")
+
   return (
     <main className="min-h-screen flex flex-col" style={{ backgroundColor: 'hsl(240 10% 4%)', color: 'hsl(0 0% 95%)' }}>
       {/* Header */}
-      <header className="flex items-center justify-between p-6">
+      <header className="relative flex items-center justify-between p-6">
         {/* Status Indicator - Top Left */}
         <StatusIndicator connected={true} />
 
         {/* Logo - Center */}
-        <div className="absolute left-1/2 -translate-x-1/2">
-          <h1 className="text-xl font-semibold tracking-tight text-foreground">
-            Algo<span className="text-primary">Rhythm</span>
-          </h1>
-        </div>
+        <h1 className="text-xl font-semibold tracking-tight" style={{ color: 'hsl(0 0% 95%)' }}>
+          Algo<span style={{ color: 'hsl(165 80% 50%)' }}>Rhythm</span>
+        </h1>
 
         {/* Coin Badge - Top Right */}
         <CoinBadge amount={500} />
