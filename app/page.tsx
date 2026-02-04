@@ -11,7 +11,7 @@ export default function AlgoRhythmDashboard() {
   const [volume, setVolume] = useState(75)
 
   return (
-    <main className="min-h-screen bg-background flex flex-col">
+    <main className="min-h-screen flex flex-col" style={{ backgroundColor: 'hsl(240 10% 4%)', color: 'hsl(0 0% 95%)' }}>
       {/* Header */}
       <header className="flex items-center justify-between p-6">
         {/* Status Indicator - Top Left */}
