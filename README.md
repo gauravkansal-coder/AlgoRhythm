@@ -29,10 +29,10 @@ Note: You need Node.js installed.
 
 3. Open VS Code in the project folder.
 
-4. Edit any file inside the app or components folder.
+4. Edit any file inside the app or components folder.(you can try adding a comment).
 
 5. The spy specifically watches these folders for code changes.
 
-6. Save your file (Ctrl + S) to trigger the signal.
+6. Save your file (Ctrl + S) to trigger the signal.For a better experience,turn on auto save on vscode
 
 Listen: The music will intensify as you enter the "Flow State"! 🎧
